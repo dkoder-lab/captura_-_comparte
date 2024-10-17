@@ -1,0 +1,38 @@
+.loading-overlay {
+  opacity: 0;
+  animation: 0.5s ease-in-out forwards fadeIn;
+  background-color: var(--color-secondary);
+}
+
+.loading {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  opacity: 0;
+  animation: 0.5s ease-in-out forwards fadeIn;
+}
+
+.loading-focus {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+}
+
+.loading-focus circle {
+  transition: 0.25s all ease-in-out;
+  animation: ease-in-out 0.5s infinite alternate focusAnim;
+}
+
+@keyframes focusAnim {
+  0% {
+    stroke-width: 3;
+  }
+  100% {
+    stroke-width: 15;
+    fill: white;
+  }
+}

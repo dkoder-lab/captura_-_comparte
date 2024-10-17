@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #DFEC50;
+  --color-secondary: #48534F;
+  --color-dark: #1E1E1E;
+  --color-white: #ffffff;
+  --color-firstLight: #FCFDEF;
+  --color-secondLight: #EEEFDC;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Exo 2', sans-serif;
+}
+
+html, body, #root, .App {
+  height: 100%;
+}
+
+.overlay {
+  inset: 0;
+  position: fixed;
+  z-index: 9;
+  background: #48534F;
+  transition: 0.25s all;
+}
+
+body,
+.Auth {
+  opacity: 0;
+  animation: 0.5s ease-in-out forwards fadeIn;
+}
+
+@keyframes fadeInOverlay {
+  100% {
+    opacity: 50%;
+  }
+}
+
+@keyframes fadeIn {
+  100% {
+    opacity: 1;
+  }
+}

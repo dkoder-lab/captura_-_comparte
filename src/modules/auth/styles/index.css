@@ -1,0 +1,96 @@
+.Auth {
+  height: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  background: url(../../../assets/images/AuthBg.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+.Auth::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgb(27,31,4);
+  background: linear-gradient(180deg, rgba(27,31,4,0.8) 0%, rgba(235,199,106,0.05) 100%);
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 3fr 1fr 1fr;
+}
+
+.scars {
+  position: absolute;
+  right: -45px;
+  bottom: -4px;
+}
+
+.modal {
+  bottom: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  max-width: 780px;
+  margin: 0 auto;
+  transition: 0.5s all ease-in-out;
+}
+
+.modal--show {
+  opacity: 0;
+  transform: translateY(600px);
+  transform-origin: top;
+  animation: ease-in-out forwards fadeInModal 0.5s;
+}
+
+.modal-header,
+.modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.overlay--show {
+  opacity: 0;
+  animation: ease-in-out forwards fadeInOverlay 0.5s;
+}
+
+.modal--hide {
+  animation: ease-in-out forwards fadeOut 0.5s;
+}
+
+.overlay--hide {
+  animation: ease-in-out forwards fadeOutOverlay 0.5s;
+}
+
+@keyframes fadeInModal {
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  100% {
+    opacity: 0;
+    transform: translateY(600px);
+  }
+}
+
+@keyframes fadeOutOverlay {
+  100% {
+    opacity: 0;
+  }
+}
