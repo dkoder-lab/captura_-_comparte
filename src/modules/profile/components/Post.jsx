@@ -1,15 +1,28 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { MdShare } from "react-icons/md";
+import { toast } from "react-toastify";
 
 export default function Post({ likesLength, id, url, creator }) {
-  const navigate = useNavigate();
+  const [valueToCopy, setValueToCopy] = useState("");
 
   function onGoShare() {
-    navigate(`/comunidad/${id}`);
+    let finalUrl = `${location.href}/${id}`;
+    finalUrl = finalUrl.replace(/mis_aventuras/g, "comunidad");
+    setValueToCopy(finalUrl);
+    const timer = setTimeout(() => {
+      const $copyText = document.getElementById(`valueToCopy${id}`);
+      $copyText.select();
+      navigator.clipboard.writeText($copyText.value);
+      toast.success("Link copiado al portapapeles", {
+        position: "top-center",
+      });
+      clearTimeout(timer);
+    }, 100);
   }
 
   return (
     <figure className="p-3 post">
+      <input type="text" style={{ display: "none" }} value={valueToCopy} id={`valueToCopy${id}`} />
       <img src={url} alt="post" className="post-img" />
       <div className="flex justify-between">
         <article>

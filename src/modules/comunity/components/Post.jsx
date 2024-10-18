@@ -2,9 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { MdShare } from "react-icons/md";
+import { toast } from "react-toastify";
+
 import useSetDoc from "../../core/hooks/useSetDocFirestore";
 import { useAuth } from "../../core/components/AuthProvider";
-import { useNavigate } from "react-router-dom";
 
 export default function Post({
   id,
@@ -16,9 +17,10 @@ export default function Post({
   onLikeApplied,
 }) {
   const [like, setLike] = useState(likesMe);
+  const [valueToCopy, setValueToCopy] = useState("");
   const [disableLike, setDisableLike] = useState(false);
   const { user } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { updateDocument } = useSetDoc();
   const likeRef = useRef(null);
 
@@ -55,7 +57,16 @@ export default function Post({
   }
 
   function onGoShare() {
-    navigate(`/comunidad/${id}`);
+    setValueToCopy(`${location.href}/${id}`);
+    const timer = setTimeout(() => {
+      const $copyText = document.getElementById(`valueToCopy${id}`);
+      $copyText.select();
+      navigator.clipboard.writeText($copyText.value);
+      toast.success("Link copiado al portapapeles", {
+        position: "top-center",
+      });
+      clearTimeout(timer);
+    }, 100);
   }
 
   useEffect(() => {
@@ -67,6 +78,7 @@ export default function Post({
 
   return (
     <figure className="p-3 post">
+      <input type="text" style={{ display: "none" }} value={valueToCopy} id={`valueToCopy${id}`} />
       <img src={url} alt="post" className="post-img" />
       <div className="flex justify-between">
         <article>
