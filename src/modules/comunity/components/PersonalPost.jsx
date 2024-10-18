@@ -13,6 +13,9 @@ export default function PersonalPost() {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
+    if (localStorage.getItem("share_href")) {
+      localStorage.removeItem("share_href");
+    }
     const getPosts = async () => {
       const doc = await getDocument(params.postId);
       setPost(doc);

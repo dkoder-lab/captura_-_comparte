@@ -78,7 +78,7 @@ export default function Post({
 
   return (
     <figure className="p-3 post">
-      <input type="text" style={{ display: "none" }} value={valueToCopy} id={`valueToCopy${id}`} />
+      <input type="text" readOnly style={{ display: "none" }} value={valueToCopy} id={`valueToCopy${id}`} />
       <img src={url} alt="post" className="post-img" />
       <div className="flex justify-between">
         <article>

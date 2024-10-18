@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { MdOutlineFileUpload, MdOutlinePhotoCamera } from "react-icons/md";
+import { NavLink, useNavigate } from "react-router-dom";
+import { MdOutlineFileUpload, MdOutlinePhotoCamera, MdPeople, MdPerson } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
 
 import { useAuth } from "./AuthProvider";
 
@@ -10,10 +11,10 @@ import Logo from "./Logo";
 import Camera from "./Camera";
 
 import "../styles/current-layout.css";
-import { FaPlus } from "react-icons/fa";
 
 export default function CurrentLayout({ children, isProfile, ...anotherProps }) {
   const { logout, user } = useAuth();
+  const navigate = useNavigate();
   const [showList, setShowList] = useState(false);
   const [modeMenuShowabel, setModeMenuShowabel] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
@@ -72,7 +73,6 @@ export default function CurrentLayout({ children, isProfile, ...anotherProps }) 
   };
 
   const onShowCamera = (hasFile) => {
-    console.log(hasFile);
     if (!hasFile) setFile(null);
     setShowCamera(true);
   };
@@ -91,6 +91,10 @@ export default function CurrentLayout({ children, isProfile, ...anotherProps }) 
   };
 
   useEffect(() => {
+    if (localStorage.getItem("share_href")) {
+      return navigate(localStorage.getItem("share_href"));
+    }
+
     document.body.addEventListener("click", (e) => {
       const $showList = document.getElementById("showList");
       const $circleContainerBtns = document.getElementById("circle-container-btns");
@@ -124,14 +128,17 @@ export default function CurrentLayout({ children, isProfile, ...anotherProps }) 
         </figure>
       </header>
       { children }
-      <footer className="footer p-5 bg-secondLight flex justify-between items-start fixed pb-6">
+      <footer className="footer p-5 bg-secondLight flex justify-between items-start fixed pb-6 pt-2">
         <NavLink
           to="/comunidad"
           className={({ isActive, isPending }) =>
             isPending ? "pending" : isActive ? "active" : ""
           }
         >
-          Comunidad
+          <div className="flex flex-col justify-center items-center">
+            <MdPeople size={40} />
+            <p>Comunidad</p>
+          </div>
         </NavLink>
         <NavLink
           to="/mis_aventuras"
@@ -139,7 +146,10 @@ export default function CurrentLayout({ children, isProfile, ...anotherProps }) 
             isPending ? "pending" : isActive ? "active" : ""
           }
         >
-          Mis aventuras
+          <div className="flex flex-col justify-center items-center">
+            <MdPerson size={40} />
+            <p>Mis aventuras</p>
+          </div>
         </NavLink>
         <Button id="btn-add" variant="circle" className="flex items-center justify-center" onClick={onShowBottomMenu}>
           {modeMenuShowabel ? '' : <FaPlus size={40} />}
