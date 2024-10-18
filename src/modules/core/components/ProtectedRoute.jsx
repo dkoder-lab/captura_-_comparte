@@ -11,6 +11,10 @@ export default function ProtectedRoute({ children, backRoute = "/" }) {
 
   useEffect(() => {
     if (!loading && !user) {
+      const validation = location.href.split("/comunidad/");
+      if (location.href.includes("comunidad") && validation[1]) {
+        localStorage.setItem("share_href", "/comunidad/" + validation[1]);
+      }
       logout();
       navigate(backRoute);
     }

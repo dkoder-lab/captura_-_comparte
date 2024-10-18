@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
-import { useEffect } from "react";
 
 import Auth from "../../auth/components";
 import Comunity from "../../comunity/components";
@@ -50,14 +49,6 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  useEffect(() => {
-    const validation = location.href.split("/comunidad/");
-
-    if (location.href.includes("comunidad") && validation[1]) {
-      localStorage.setItem("share_href", "/comunidad/" + validation[1]);
-    }
-  }, []);
-
   return (
     <div className="App">
       <AuthProvider>
