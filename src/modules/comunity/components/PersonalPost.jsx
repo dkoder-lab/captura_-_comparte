@@ -5,6 +5,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 
 import CurrentLayout from "../../core/components/CurrentLayout";
 import useGetDoc from "../../core/hooks/useGetDocFirestore";
+import MiniLoader from "../../core/components/MiniLoader";
 
 export default function PersonalPost() {
   const params = useParams();
@@ -38,7 +39,7 @@ export default function PersonalPost() {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <MiniLoader />
       )}
       <div className="pb-6"></div>
     </CurrentLayout>

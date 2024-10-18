@@ -70,7 +70,7 @@ export default function Post({
       <img src={url} alt="post" className="post-img" />
       <div className="flex justify-between">
         <article>
-          <p className="text-lg font-medium text-dark opacity-70">{creator}</p>
+          <p className="text-lg font-medium text-dark opacity-70 truncate creator-text">{creator}</p>
           <p className="text-lg font-medium text-dark opacity-70">
             {likesLength} like{likesLength !== 1 ? "s" : ""}
           </p>

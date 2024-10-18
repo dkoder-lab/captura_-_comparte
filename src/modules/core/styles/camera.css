@@ -1,6 +1,7 @@
 .modal-camera {
   @apply bg-primary;
   inset: 0;
+  z-index: 60;
   position: fixed;
   overflow-y: auto;
   opacity: 0;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { MdClose, MdOutlineFileUpload, MdOutlinePhotoCamera } from "react-icons/md";
+import { MdOutlineFileUpload, MdOutlinePhotoCamera } from "react-icons/md";
 
 import { useAuth } from "./AuthProvider";
 
@@ -17,6 +17,7 @@ export default function CurrentLayout({ children, isProfile, ...anotherProps }) 
   const [showList, setShowList] = useState(false);
   const [modeMenuShowabel, setModeMenuShowabel] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
+  const [file, setFile] = useState(null);
 
   const onStopPropagation = (e) => {
     e.stopPropagation();
@@ -70,12 +71,23 @@ export default function CurrentLayout({ children, isProfile, ...anotherProps }) 
     }, 150);
   };
 
-  const onShowCamera = () => {
+  const onShowCamera = (hasFile) => {
+    console.log(hasFile);
+    if (!hasFile) setFile(null);
     setShowCamera(true);
   };
 
   const onCloseCamera = () => {
     setShowCamera(false);
+  };
+
+  const onOpenFiles = () => {
+    document.getElementById("image-file-input").click()
+  };
+
+  const onUploadImage = (e) => {
+    setFile(e.target.files[0]);
+    onShowCamera(true);
   };
 
   useEffect(() => {
@@ -136,10 +148,11 @@ export default function CurrentLayout({ children, isProfile, ...anotherProps }) 
           <div className="circle-container-btns rounded-full" id="circle-container-btns" onClick={(e) => e.stopPropagation()}>
             <FaPlus size={30} onClick={onCloseAdd} className="cursor-pointer mx-auto mb-5" style={{ transform: "rotate(45deg)" }} />
             <ul className="list-btns">
-              <li className="btn-item rounded-full bg-primary p-3">
+              <input type="file" accept="image/*" onChange={onUploadImage} style={{ display: "none" }} name="image" id="image-file-input" />
+              <li className="btn-item rounded-full bg-primary p-3" onClick={onOpenFiles}>
                 <MdOutlineFileUpload size={50} />
               </li>
-              <li className="btn-item rounded-full bg-primary p-3" onClick={onShowCamera}>
+              <li className="btn-item rounded-full bg-primary p-3" onClick={() => onShowCamera()}>
                 <MdOutlinePhotoCamera size={50} />
               </li>
             </ul>
@@ -147,7 +160,7 @@ export default function CurrentLayout({ children, isProfile, ...anotherProps }) 
         ) : ''}
       </footer>
       {
-        showCamera ? <Camera onClose={onCloseCamera} /> : ''
+        showCamera ? <Camera onClose={onCloseCamera} file={file} /> : ''
       }
     </section>
   );

@@ -17,8 +17,10 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-export default function Camera({ onClose }) {
-  const [localUrl, setLocalUrl] = useState("");
+export default function Camera({ onClose, file }) {
+  const filePath = file ? URL.createObjectURL(file) : "";
+  console.log(file, "file");
+  const [localUrl, setLocalUrl] = useState(filePath);
   const { uploadImage, storagePath } = useUploadImage();
   const { user } = useAuth();
   const { setDocument } = useSetDoc();
@@ -72,6 +74,11 @@ export default function Camera({ onClose }) {
       });
       onClose();
     });
+  };
+
+  const onGoBack = () => {
+    setLocalUrl("");
+    if (file) onClose();
   };
 
   const onSave = async () => {
@@ -180,7 +187,7 @@ export default function Camera({ onClose }) {
                   <div className="flex justify-between gap-4">
                     <Button
                       variant="secondary"
-                      onClick={() => setLocalUrl("")}
+                      onClick={onGoBack}
                       style={{ flex: 1 }}
                     >
                       Volver a intentar

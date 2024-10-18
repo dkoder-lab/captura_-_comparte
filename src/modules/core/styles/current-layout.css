@@ -34,6 +34,7 @@
 
 .header {
   top: 0;
+  z-index: 50;
   bottom: auto;
   position: sticky;
 }

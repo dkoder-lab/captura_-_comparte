@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
+
 import Post from "./Post";
 import useGetDoc from "../../core/hooks/useGetDocFirestore";
+import MiniLoader from "../../core/components/MiniLoader";
+import { useAuth } from "../../core/components/AuthProvider";
 
 import "../styles/posts.css";
-import { useEffect, useState } from "react";
-import { useAuth } from "../../core/components/AuthProvider";
 
 export default function PostsList() {
   const { getDocumentsByFilter } = useGetDoc();
@@ -37,7 +39,7 @@ export default function PostsList() {
 
   return (
     <ul className="posts">
-      {postFetched.length ? postMapper(postFetched) : <p>Loading...</p>}
+      {postFetched.length ? postMapper(postFetched) : <MiniLoader />}
     </ul>
   );
 }
